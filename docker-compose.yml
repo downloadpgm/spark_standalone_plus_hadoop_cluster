@@ -1,0 +1,69 @@
+version: "3.1"
+
+services:
+  spkmst:
+    image: mkenjis/spark_hadoop_cluster_img
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hostlabel == hdpmst
+    environment:
+      - SPARK_HOST_SLAVES=spk1,spk2,spk3
+      - HADOOP_MULTINODE=yes
+    networks:
+      - mynet
+    depends_on:
+      - spk1,spk2,spk3
+    ports:
+      - 4040:4040
+      - 8080:8080
+    volumes:
+      - .:/root/staging
+      - name0:/hadoop/hdfs/namenode
+  spk1:
+    image: mkenjis/spark_hadoop_cluster_img
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hostlabel == hdp1
+    networks:
+      - mynet
+    volumes:
+      - data1:/hadoop/hdfs/datanode
+    environment:
+      - HADOOP_MASTER=spkmst
+  spk2:
+    image: mkenjis/spark_hadoop_cluster_img
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hostlabel == hdp2
+    networks:
+      - mynet
+    volumes:
+      - data2:/hadoop/hdfs/datanode
+    environment:
+      - HADOOP_MASTER=spkmst
+  spk3:
+    image: mkenjis/spark_hadoop_cluster_img
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hostlabel == hdp3
+    networks:
+      - mynet
+    volumes:
+      - data3:/hadoop/hdfs/datanode
+    environment:
+      - HADOOP_MASTER=spkmst
+
+networks:
+  mynet:
+    external:
+       name: mynet
+
+volumes:
+  name0:
+  data1:
+  data2:
+  data3:
