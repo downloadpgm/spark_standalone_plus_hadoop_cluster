@@ -15,7 +15,6 @@ services:
     depends_on:
       - spk1,spk2,spk3
     ports:
-      - 4040:4040
       - 8080:8080
     volumes:
       - .:/root/staging
@@ -56,6 +55,20 @@ services:
       - data3:/hadoop/hdfs/datanode
     environment:
       - HADOOP_MASTER=spkmst
+  spk_cli:
+    image: mkenjis/ubspkcli_yarn_img
+    deploy:
+      placement:
+        constraints:
+          - node.labels.hostlabel == hdp4
+    networks:
+      - mynet
+    environment:
+      - HADOOP_HOST_MASTER=spkmst
+    ports:
+      - 4040:4040
+      - 4041:4041
+      - 4042:4042
 
 networks:
   mynet:
