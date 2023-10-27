@@ -129,11 +129,16 @@ $ spark-submit --executor-cores 4 --total-executor-cores 8 --master spark://cdbc
 
 
 13. in the browser, issue the address https://host:8080 to access standalone UI
+
 ![standalone query](docs/before_run.png)
+
 ![standalone query](docs/during_run.png)
 
 14. in the browser, issue the address https://host:4040 (:4041, :4042) to access spark UI of each run
+
 ![executors query](docs/executors_dir1.png)
+
 ![executors query](docs/executors_dir2.png)
+
 ![executors query](docs/executors.png)
 
