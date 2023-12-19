@@ -8,3 +8,9 @@ echo '# Number of worker instances to run on each machine (default: 1)' >>$SPARK
 echo '#export SPARK_WORKER_INSTANCES=2' >>$SPARK_HOME/conf/spark-env.sh
 echo '#export SPARK_WORKER_CORES=2' >>$SPARK_HOME/conf/spark-env.sh
 chmod +x $SPARK_HOME/conf/spark-env.sh
+
+# spark-defaults.conf (SPARK)
+# ===================
+echo 'spark.driver.memory  1024m' >$SPARK_HOME/conf/spark-defaults.conf
+echo 'spark.yarn.am.memory 1024m' >>$SPARK_HOME/conf/spark-defaults.conf
+echo 'spark.executor.memory  1536m' >>$SPARK_HOME/conf/spark-defaults.conf
